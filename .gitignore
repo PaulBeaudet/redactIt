@@ -1,0 +1,2 @@
+# ignore our sesitive example text files
+*.txt
