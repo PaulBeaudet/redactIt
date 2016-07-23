@@ -15,12 +15,15 @@ var redact = {
     },
     result: function(sourceStr, redactStr){
         var redactArray = redactStr.split(", ");
-        console.log(redactArray);
-        for(var i = 0; i < redactArray.length; i++){
-            redaction = new RegExp(redactArray[i], "gi");
-            sourceStr = sourceStr.replace(redaction, "XXXX");
+        for(var i = 0; i < redactArray.length; i++){           // for all redactions given
+            redaction = new RegExp(redactArray[i], "gi");      // regular expression: globaly relpace word (case insensitive)
+            sourceStr = sourceStr.replace(redaction, "XXXX");  // replace redaction occurences with "xxxx"
         }
-        console.log(sourceStr);
+        redact.fs.writeFile('final.txt', sourceStr, redact.createFile);
+    },
+    createFile: function(error){
+        if(error){console.log('error writing file: ' + error)}
+        else {console.log('Mission Accomplished');}
     }
 }
 
