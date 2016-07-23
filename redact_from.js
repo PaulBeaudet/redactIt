@@ -14,12 +14,13 @@ var redact = {
         }
     },
     result: function(sourceStr, redactStr){
-        var redactArray = redactStr.split(", ");
-        for(var i = 0; i < redactArray.length; i++){           // for all redactions given
-            redaction = new RegExp(redactArray[i], "gi");      // regular expression: globaly relpace word (case insensitive)
-            sourceStr = sourceStr.replace(redaction, "XXXX");  // replace redaction occurences with "xxxx"
+        redactStr = redactStr.replace(/['"]+/g, '');                                  // trim any qoutes, comma dilimination expected
+        var redactArray = redactStr.split(", ");                                      // comma space dilimination expected
+        console.log("redacting: " + redactArray);
+        for(var i = 0; i < redactArray.length; i++){                                  // for all redactions given
+            sourceStr = sourceStr.replace(new RegExp(redactArray[i], "gi"), "XXXX");  // replace redaction occurences with "xxxx"
         }
-        redact.fs.writeFile('final.txt', sourceStr, redact.createFile);
+        redact.fs.writeFile('final.txt', sourceStr, redact.createFile);               // write to a seperate file
     },
     createFile: function(error){
         if(error){console.log('error writing file: ' + error)}
