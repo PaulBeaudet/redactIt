@@ -15,7 +15,7 @@ var redact = {
     },
     result: function(sourceStr, redactStr){
         redactStr = redactStr.replace(/['"]+/g, '');                                  // trim any qoutes, comma dilimination expected
-        var redactArray = redactStr.split(", ");                                      // comma space dilimination expected
+        var redactArray = redactStr.split(/\s*,\s*/);                                 //diliminator: comma preceeded or followed by x spaces
         console.log("redacting: " + redactArray);
         for(var i = 0; i < redactArray.length; i++){                                  // for all redactions given
             sourceStr = sourceStr.replace(new RegExp(redactArray[i], "gi"), "XXXX");  // replace redaction occurences with "xxxx"
