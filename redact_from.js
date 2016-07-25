@@ -10,8 +10,8 @@ var file = {
         }
     },
     isFile: function(path){                             // because having functionallity was too much for this lib
-        try { return file.sys.statSync(path).isFile();}
-        catch (error) {
+        try { return file.sys.statSync(path).isFile();} // hasToBeAFile might be a more apt method name
+        catch (error) {                                 // because it just throws an error when its not...
             if (error.code === 'ENOENT') { return false; }
             else { throw error;}
         }
@@ -24,7 +24,7 @@ var redact = {
             redact.file(sourceLoc, redactions, location);                             // provide redactions for one file
         } else if (file.isDir(sourceLoc)){                                            // when given a directory
             // for files in directory perform redact.file if a txt file
-        }
+        } else {console.log('source path incorrect');}
     },
     file: function(src, redactions, location){
         var path = 'example.txt';                                                     // defualt path for demonstration case
@@ -43,7 +43,7 @@ var redact = {
             } else {console.log('no data to redact');}                                // blank file error case
         }
     },
-    result: function(path, sourceStr, redactStr){
+    result: function(path, sourceStr, redactStr){                                     // method that does redaction
         redactStr = redactStr.replace(/['"]+/g, '');                                  // trim any qoutes, comma dilimination expected
         var redactArray = redactStr.split(/\s*,\s*/);                                 //diliminator: comma preceeded or followed by x spaces
         console.log("redacting: " + redactArray);
